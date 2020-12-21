@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ author.first_name }} {{author.last_name }}</title>
+</head>
+
+<body>
+    <p><a href="/">Back to Books</a></p>
+    <p><a href="/index_author">Back to Authors</a></p>
+    <div>
+        <h1>{{ author_info.first_name }} {{author_info.last_name }}</h1>
+        <h3>ID: {{ author_info.id }}</h3>
+        <p>Notes: {{ author_info.notes }}</p>
+    </div>
+
+    <div>
+        <p>Books:</p>
+        <ul>
+            {% for book in author_info.book.all %}
+            <li><a href="/display_book/{{ book.id }}">{{ book.title }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <form action='/add_book_to_list' method='post'>
+            {% csrf_token %}
+            <select name="title">
+                {% for book in all_the_books %}
+                <option value="{{ book.id }}">{{ book.title }}</option>
+                {% endfor %}
+            </select>
+            <button>Add book</button>
+        </form>
+    </div>
+</body>
+
+</html>
